@@ -9,6 +9,7 @@ const BlindTimer = () => {
         var nowDate = Date.now();
         var endInMs = nowDate + minutes * 60 * 1000;
         localStorage.setItem("countdownEnd", JSON.stringify(endInMs));
+        setTimeLeft(minutes * 60);
     };
 
     const syncWithLocalStorage = () => {
