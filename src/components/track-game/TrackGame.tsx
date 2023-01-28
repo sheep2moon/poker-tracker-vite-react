@@ -36,14 +36,14 @@ const TrackGame = () => {
         let playersData = gameData?.playersData;
         if (playersData && gameData?.name) {
             playersData = playersData.map((player, index) => {
-                if (index === playerIndex) {
+                if (index === playerIndex && player.rebuys > 0) {
                     return { ...player, rebuys: player.rebuys - 1 };
                 }
                 return player;
             });
             const newGameData = { ...gameData, playersData };
             setGameData(newGameData);
-            saveGameData(gameData);
+            saveGameData(newGameData);
         }
     };
 
@@ -98,6 +98,7 @@ const TrackGame = () => {
                     </div>
                 ))}
             </div>
+            <div className="divider pb-8"></div>
         </div>
     );
 };

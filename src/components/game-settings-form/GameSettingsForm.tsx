@@ -1,6 +1,11 @@
 import React, { ChangeEvent, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { retrieveGameData, saveGameData } from "../../helpers/localStorageHelpers";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { IoIosSave } from "react-icons/io";
+import { FaUsers } from "react-icons/fa";
+import { GiBuyCard } from "react-icons/gi";
+import { MdDriveFileRenameOutline } from "react-icons/md";
 
 const GameSettingsForm = () => {
     const [name, setName] = useState("");
@@ -53,11 +58,16 @@ const GameSettingsForm = () => {
     return (
         <div className="p-2 flex flex-col gap-4 max-w-xl mx-auto min-h-screen lg:flex lg:flex-col lg:justify-center">
             <h1 className="text-center text-2xl mb-4">Ustawienia partii</h1>
+            <h1 className="text-2xl mt-4 flex items-center gap-2">
+                <MdDriveFileRenameOutline className="text-success" />
+                Nazwa partii
+            </h1>
             <input value={name} onChange={e => setName(e.target.value)} type="text" placeholder="Nazwa" className="input input-bordered input-success w-full" />
 
-            <h1 className="text-2xl mt-4">
+            <h1 className="text-2xl mt-4 flex items-center gap-2">
+                <GiBuyCard className="text-success" />
                 Rebuy
-                <span className="w-10"> - {rebuy}zł</span>
+                <span className="w-16"> - {rebuy}zł</span>
             </h1>
             <div className="mt-4">
                 {/* <h2 className="text-center font-bold text-xl">Rebuy</h2> */}
@@ -73,25 +83,29 @@ const GameSettingsForm = () => {
                 </div>
             </div>
 
-            <h1 className="text-2xl mt-4">Gracze</h1>
+            <h1 className="text-2xl mt-4 flex gap-2 items-center">
+                <FaUsers className="text-success" /> Gracze
+            </h1>
             {Array(playersCount)
                 .fill(0)
                 .map((_, index) => (
                     <div key={`player-form-${index}`} className="flex items-center">
                         <span className="text-2xl mr-2 w-8 block">{index + 1}.</span>
-                        <input value={playersData[index].name} onChange={e => handlePlayerNameChange(e, index)} type="text" placeholder="Nazwa" className="input input-bordered input-success w-full max-w-xs" />
+                        <input value={playersData[index].name} onChange={e => handlePlayerNameChange(e, index)} type="text" placeholder="Nazwa" className="input input-bordered input-success w-full" />
                         <button className="btn btn-square ml-2" onClick={() => handleRemovePlayer(index)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-succes" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
                     </div>
                 ))}
             <button onClick={handleAddPlayer} className="ml-10 btn btn-outline btn-success max-w-xs">
+                <AiOutlineUserAdd className="text-xl mr-2" />
                 Dodaj gracza
             </button>
 
             <button onClick={handleCreateGame} className="btn btn-block mt-10 text-2xl">
+                <IoIosSave className="mr-2 text-success" />
                 ZAPISZ
             </button>
         </div>

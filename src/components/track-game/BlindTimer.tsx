@@ -1,11 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { zeroPad } from "../../helpers/zeroPad";
 import { TfiControlPause, TfiControlPlay } from "react-icons/tfi";
+import clsx from "clsx";
 
 const BlindTimer = () => {
-    const [timeLeft, setTimeLeft] = useState<number>(0);
+    let timerInterval: NodeJS.Timer;
+    const [timeLeft, setTimeLeft] = useState<number>(0); //time in seconds
+    const [isFinished, setIsFinished] = useState(false);
 
     const startCountdown = (minutes: number) => {
+        setIsFinished(false);
         var nowDate = Date.now();
         var endInMs = nowDate + minutes * 60 * 1000;
         localStorage.setItem("countdownEnd", JSON.stringify(endInMs));
@@ -21,20 +25,29 @@ const BlindTimer = () => {
         return false;
     };
 
+    const finishCountdown = () => {
+        setIsFinished(true);
+        clearInterval(timerInterval);
+        localStorage.setItem("countdownEnd", "");
+    };
+
     const countDown = () => {
-        setTimeLeft(prev => prev - 1);
+        if (timeLeft > 0) {
+            setTimeLeft(prev => prev - 1);
+        } else {
+            finishCountdown();
+        }
     };
 
     useEffect(() => {
-        let interval: NodeJS.Timer;
         const syncPassed = syncWithLocalStorage();
         if (syncPassed) {
-            interval = setInterval(() => {
+            timerInterval = setInterval(() => {
                 countDown();
             }, 1000);
         }
 
-        return () => clearInterval(interval);
+        return () => clearInterval(timerInterval);
     }, [timeLeft]);
 
     return (
@@ -49,14 +62,13 @@ const BlindTimer = () => {
                 <button onClick={() => startCountdown(60)} className="btn btn-md btn-outline btn-success">
                     60 min
                 </button>
-                {timeLeft !== 0 && (
-                    <div className="flex items-center gap-2 mt-2 ml-auto">
-                        <div className="text-3xl flex items-center w-20">
-                            <span>{Math.floor(timeLeft / 60)}:</span>
-                            <span>{zeroPad(timeLeft % 60, 2)}</span>
-                        </div>
+
+                <div className="flex items-center gap-2 mt-2 ml-auto">
+                    <div className={clsx("text-3xl flex items-center w-20", { "animate-pulse": isFinished })}>
+                        <span>{Math.floor(timeLeft / 60)}:</span>
+                        <span>{zeroPad(timeLeft % 60, 2)}</span>
                     </div>
-                )}
+                </div>
             </div>
         </div>
     );
