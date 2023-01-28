@@ -83,15 +83,15 @@ const TrackGame = () => {
                     <span>Rebuye</span>
                 </div>
                 {gameData.playersData.map((player, index) => (
-                    <div className="grid grid-cols-[50px_1fr_100px] p-2 text-lg" key={player.name}>
+                    <div className="grid grid-cols-[50px_1fr_150px] p-2 text-lg" key={player.name}>
                         <span>{index + 1}</span>
                         <span className="">{player.name}</span>
                         <div className="flex gap-2 items-center">
-                            <button onClick={() => substractRebuy(index)} className="btn btn-sm bg-success focus:bg-success btn-square">
+                            <button onClick={() => substractRebuy(index)} className="btn btn-md bg-success focus:bg-success btn-square">
                                 <TfiMinus className="text-zinc-900" />
                             </button>
-                            <span>{player.rebuys}</span>
-                            <button onClick={() => addRebuy(index)} className="btn btn-sm bg-success focus:bg-success btn-square">
+                            <span className="text-2xl text-center w-14 block">{player.rebuys}</span>
+                            <button onClick={() => addRebuy(index)} className="btn btn-md bg-success focus:bg-success btn-square">
                                 <TfiPlus className="text-zinc-900" />
                             </button>
                         </div>
