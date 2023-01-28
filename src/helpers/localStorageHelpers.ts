@@ -18,3 +18,12 @@ export const hasGameData = () => {
     if (localStorage.getItem("current-game") === null) return false;
     return true;
 };
+
+export const resetGameData = () => {
+    if (localStorage.getItem("current-game") !== null) {
+        localStorage.removeItem("current-game");
+    }
+    if (localStorage.getItem("countdownEnd") !== null) {
+        localStorage.removeItem("countdownEnd");
+    }
+};

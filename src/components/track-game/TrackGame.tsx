@@ -4,6 +4,7 @@ import BlindTimer from "./BlindTimer";
 import { TfiMinus, TfiPlus } from "react-icons/tfi";
 import { retrieveGameData, saveGameData } from "../../helpers/localStorageHelpers";
 import { Link } from "react-router-dom";
+import { AiOutlineLeft } from "react-icons/ai";
 
 const TrackGame = () => {
     const [gameData, setGameData] = useState<PokerGameData>();
@@ -58,6 +59,9 @@ const TrackGame = () => {
 
     return (
         <div className="max-w-xl mx-auto min-h-screen lg:flex lg:flex-col lg:justify-center">
+            <Link to="/" className="text-2xl gap-2 flex items-center ml-4 pt-4">
+                <AiOutlineLeft />
+            </Link>
             <div className="flex">
                 <div className="stat">
                     <div className="stat-title text-xl">{gameData.name}</div>

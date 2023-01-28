@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { retrieveGameData, saveGameData } from "../../helpers/localStorageHelpers";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { IoIosSave } from "react-icons/io";
@@ -37,7 +37,7 @@ const GameSettingsForm = () => {
 
     const handleCreateGame = () => {
         const gameData = {
-            name,
+            name: name ? name : "bez nazwy",
             rebuy,
             playersData
         };
